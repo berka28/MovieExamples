@@ -1,8 +1,8 @@
-﻿using MovieSqlCodeFirst.Services;
+﻿using MovieSqlDatabaseFirst.Services;
 using System;
 using System.Threading.Tasks;
 
-namespace MovieSqlCodeFirst
+namespace MovieSqlDatabaseFirst
 {
     class Program
     {
@@ -14,15 +14,17 @@ namespace MovieSqlCodeFirst
             await GetMoviesByWatchedAsync(true);
             await MarkMovieAsWatchedAsync();
             await RemoveMovieAsync();
-            
+
         }
 
         private static async Task AddMovieAsync()
         {
             Console.WriteLine("Enter a new Movie: ");
             string name = Console.ReadLine();
+            Console.WriteLine("Enter a genre: ");
+            string genre = Console.ReadLine();
 
-            await MovieService.AddMovieAsync(name);
+            await MovieService.AddMovieAsync(name, genre);
             Console.WriteLine("Created new Movie in the Database");
         }
 
@@ -31,28 +33,28 @@ namespace MovieSqlCodeFirst
             var movies = await MovieService.GetMoviesAsync();
 
             Console.WriteLine("Listing all Movies in the Database");
-            foreach(var movie in movies)
+            foreach (var movie in movies)
             {
-                Console.WriteLine($"EAN: {movie.EAN}");
+                Console.WriteLine($"EAN: {movie.Ean}");
                 Console.WriteLine($"Name: {movie.Name}");
                 Console.WriteLine($"Genre: {movie.Genre}");
                 Console.WriteLine($"Watched: {movie.Watched}");
                 Console.WriteLine($"Bought: {movie.Bought}");
                 Console.WriteLine(new string('-', 30));
 
-            }        
+            }
         }
 
         private static async Task GetMovieAsync(int EAN = 0)
         {
-            if(EAN == 0)
+            if (EAN == 0)
             {
                 Console.WriteLine("Enter EAN of the Movie: ");
                 EAN = Convert.ToInt32(Console.ReadLine());
             }
 
             var movie = await MovieService.GetMovieAsync(EAN);
-            Console.WriteLine($"EAN: {movie.EAN}");
+            Console.WriteLine($"EAN: {movie.Ean}");
             Console.WriteLine($"Name: {movie.Name}");
             Console.WriteLine($"Genre: {movie.Genre}");
             Console.WriteLine($"Watched: {movie.Watched}");
@@ -66,7 +68,7 @@ namespace MovieSqlCodeFirst
             Console.WriteLine("Listing Movies in the Database");
             foreach (var movie in movies)
             {
-                Console.WriteLine($"EAN: {movie.EAN}");
+                Console.WriteLine($"EAN: {movie.Ean}");
                 Console.WriteLine($"Name: {movie.Name}");
                 Console.WriteLine($"Genre: {movie.Genre}");
                 Console.WriteLine($"Watched: {movie.Watched}");

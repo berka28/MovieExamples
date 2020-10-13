@@ -1,20 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieSqlCodeFirst.Models;
+using MovieSqlDatabaseFirst.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieSqlCodeFirst.Services
+namespace MovieSqlDatabaseFirst.Services
 {
     public static class MovieService
     {
-        public static async Task AddMovieAsync(string name)
+        public static async Task AddMovieAsync(string name, string genre)
         {
             using MovieContext context = new MovieContext();
 
-            context.Movies.Add(new Movie(name));
+            context.Movies.Add(new Movie(name, genre));
             await context.SaveChangesAsync();
         }
 
@@ -45,7 +45,7 @@ namespace MovieSqlCodeFirst.Services
 
             var movie = await context.Movies.FindAsync(EAN);
 
-            if(movie != null)
+            if (movie != null)
             {
                 movie.Watched = true;
                 context.Entry(movie).State = EntityState.Modified;
